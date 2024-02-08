@@ -22,4 +22,10 @@ class MULTIPLAYERTEST_API IMP_InteractInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+
+	UFUNCTION(BlueprintNativeEvent, Blueprintable)
+	void Interact();
+
+	UFUNCTION(BlueprintNativeEvent, Blueprintable)
+	void EnableInteractWidget(const bool bIsEnableWidget);
 };

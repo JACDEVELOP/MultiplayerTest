@@ -1,26 +1,37 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "MP_lever.h"
-
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AMP_lever::AMP_lever()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
-// Called when the game starts or when spawned
-void AMP_lever::BeginPlay()
+void AMP_lever::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::BeginPlay();
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AMP_lever, AssignedDoor);
+}
+
+void AMP_lever::Interact_Implementation()
+{
+	Super::Interact_Implementation();
+	if(!bCanInteract)
+	{
+		return;
+	}
 	
+	if(!AssignedDoor.IsValid())
+	{
+		return;
+	}
+	
+	AssignedDoor->Interact_Implementation();
 }
 
-// Called every frame
-void AMP_lever::Tick(float DeltaTime)
+void AMP_lever::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(DeltaSeconds);
 }
-

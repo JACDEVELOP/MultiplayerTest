@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MultiplayerTest/Items/MP_InteractableItem.h"
+#include "MultiplayerTest/Items/Door/MP_DoorBase.h"
 #include "MP_lever.generated.h"
 
 UCLASS()
@@ -15,11 +16,11 @@ public:
 	// Sets default values for this actor's properties
 	AMP_lever();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void Interact_Implementation() override;
+	
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category= "Interactuable")
+	TSoftObjectPtr<AMP_DoorBase> AssignedDoor;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaSeconds) override;
 };
